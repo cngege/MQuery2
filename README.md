@@ -28,3 +28,6 @@ $('#onAttack').BListener('add', function (e){
 
 ```
 
+## License
+
+MIT
