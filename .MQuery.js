@@ -247,8 +247,15 @@ _$.time = TimeNow;																//返回当前时间字符串;
 _$.setdata = setShareData;
 _$.getdata = getShareData;
 _$.deldata = removeShareData;
-_$.log = log;																	//写日志到控制台
-//_$.run = runScript;																//运行脚本
+_$.log = t={																	//写日志到控制台
+	if(typeof t == "object"){
+		log(_$.jsonStr(t));
+	}else{
+		log(t);
+	}
+};
+
+//_$.run = runScript;															//运行脚本
 _$.cmd = runcmd;																//运行命令 控制台不回显
 _$.say = t => _$.cmd("say "+ t);												//发送全体玩家文本消息
 _$.getplayer = getOnLinePlayers;												//获取在线玩家列表
