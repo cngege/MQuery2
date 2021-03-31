@@ -199,12 +199,14 @@ let Mquery = function (a,b){
 		if(n == 0){
 			return false;
 		}
-		formdata[n] = fun;
-		if(time != 0){
-			_$.timeout(()=>{
-				delete formdata[n];
-				_$.reform(n);
-			},time);
+		if(typeof fun == "function"){
+			formdata[n] = fun;
+			if(time != 0){
+				_$.timeout(()=>{
+					delete formdata[n];
+					_$.reform(n);
+				},time);
+			}
 		}
 		return true;
 	}
@@ -226,7 +228,7 @@ _$.trim = s => s.replace(/(^\s*)|(\s*$)/g,"");									//去除首位空格
 _$.isuuid = s =>{let re = /\w{8}(-\w{4}){3}-\w{12}/;return re.test(s)};
 _$.nametouuid=n=>{for(a=0;a<playerlist.length;a++){if(playerlist[a]["playername"]==n){return playerlist[a]["uuid"]}};let Player=JSON.parse(_$.getplayer());playerlist=Player;for(i=0;i<Player.length;i++){if(Player[i]["playername"]==n){return Player[i]["uuid"]}};return null};
 _$.json = JSON.parse;															//JSON 反序列化
-_$.jsonStr = JSON.stringify														//JSON 序列化为字符串
+_$.jsonStr = JSON.stringify;													//JSON 序列化为字符串
 _$.uncode = unescape;
 _$.encode = escape;
 
@@ -247,13 +249,7 @@ _$.time = TimeNow;																//返回当前时间字符串;
 _$.setdata = setShareData;
 _$.getdata = getShareData;
 _$.deldata = removeShareData;
-_$.log = t={																	//写日志到控制台
-	if(typeof t == "object"){
-		log(_$.jsonStr(t));
-	}else{
-		log(t);
-	}
-};
+_$.log = t=>(typeof t == "object")?log(_$.jsonStr(t)):log(t);					//写日志到控制台
 
 //_$.run = runScript;															//运行脚本
 _$.cmd = runcmd;																//运行命令 控制台不回显
